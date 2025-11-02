@@ -5,204 +5,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>COMUNICADO</title>
     <link rel="icon" href="stuff/favicon.png" type="image/png" />
-    <style>
-      html,
-      body {
-        min-height: 100%;
-        margin: 0;
-        padding: 0;
-        overflow-x: hidden;
-        background-color: black;
-        image-rendering: pixelated;
-        cursor: none;
-        user-select: none;
-      }
-
-      #cursor {
-        position: absolute;
-        transform: scale(1.25);
-        pointer-events: none;
-      }
-
-      #dialogueBox {
-        z-index: 1;
-        border: 8px solid #bbff00;
-        padding: 10px;
-        height: 100px;
-        color: #bbff00;
-        font-family: consolas, monospace;
-        font-size: 24px;
-        text-align: center;
-        display: block;
-        margin: 6px auto 0;
-        width: 318px;
-      }
-
-      #overlay {
-        position: absolute;
-        z-index: 3;
-        pointer-events: none;
-        height: 110%;
-        width: 100%;
-        background-image: url(stuff/CRTno.gif);
-        background-repeat: repeat;
-        filter: brightness(0);
-        opacity: 0.5;
-      }
-
-      #profilePic {
-        z-index: 1;
-        border: 8px solid #bbff00;
-        display: block;
-        width: 318px;
-        margin: 40px auto 0;
-      }
-
-      @media only screen and (max-width: 768px) {
-        #cursor {
-          visibility: hidden;
-        }
-        #profilePic {
-          margin-top: 10px;
-        }
-      }
-    </style>
+    <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <div id="cursor"><img src="stuff/cursor.png" /></div>
+    <!-- Cursor customizado -->
+    <div id="cursor">
+      <img src="stuff/cursor.png" alt="cursor" />
+    </div>
+
+    <!-- Camada escura / filtro CRT -->
     <div id="overlay"></div>
-    <img id="profilePic" src="face/closed.png" />
+
+    <!-- Personagem / rosto -->
+    <img id="profilePic" src="face/face.png" alt="rosto" />
+
+    <!-- Caixa de diálogo -->
     <p id="dialogueBox"></p>
 
-    <script>
-      let dialogo = [
-        "FALA RAPAZIADA!!!",
-        "Tô ligado que vocês ralaram demais pra chegar aqui...",
-        "Passaram por cada fita que eu e minha tropa bolou...",
-        "Mesmo perdendo uns parceiro no caminho...",
-        "Mas agora eu quero saber na moral:",
-        "Quantos de vocês ainda tão aí firmeza?",
-      ];
+    <!-- Campo de entrada do usuário -->
+    <input
+      type="number"
+      id="user-input"
+      min="0"
+      placeholder="Digite um número..."
+      autocomplete="off"
+    />
 
-      let respostaAlta = [
-        "KARALIOOOOOOOOOOOOOOOOO",
-        "SOBROU GERAL AINDA?!",
-        "Brabo demais, na moral.",
-        "Mas fala tu...",
-        "Cês viraram irmão nessa caminhada, né não?",
-        "Querem sair todo mundo junto...",
-        "Mesmo que nem tenha saída...",
-        "Mas... e se eu disser que TEM SIM uma saída?",
-        "Lembra da porta da PRIMEIRA SALA?",
-        "Abri ela agora...",
-        "!!!!!!!",
-        "Sem querer... abri OUTRA COISA também.",
-        "Aquela porta vermelha...",
-        "...",
-        "CORRE!",
-      ];
-
-      let i = 0;
-      let j = 0;
-      let speed = 50;
-      let dialogIndex = 0;
-      let typing = false;
-
-      const box = document.getElementById("dialogueBox");
-      const input = document.createElement("input");
-
-      input.type = "number";
-      input.min = 0;
-      input.style.background = "black";
-      input.style.color = "#bbff00";
-      input.style.border = "4px solid #bbff00";
-      input.style.fontSize = "24px";
-      input.style.textAlign = "center";
-      input.style.display = "none";
-      input.style.margin = "20px auto";
-      input.style.display = "block";
-      input.style.width = "100px";
-
-      box.insertAdjacentElement("afterend", input);
-
-      function digitar(texto, callback) {
-        if (i < texto.length) {
-          box.innerHTML += texto.charAt(i);
-
-          // Toca o som da tecla
-          let somTecla = new Audio("stuff/keyboard.wav"); // Ajuste o caminho se necessário
-          somTecla.volume = 0.3; // Volume baixo para não ficar muito alto
-          somTecla.play();
-
-          i++;
-          setTimeout(() => digitar(texto, callback), speed);
-        } else {
-          typing = false;
-          if (callback) setTimeout(callback, 800);
-        }
-      }
-
-      function mostrarDialogo(falas, onEnd) {
-        if (dialogIndex < falas.length) {
-          i = 0;
-          box.innerHTML = "";
-          typing = true;
-          digitar(falas[dialogIndex], () => {
-            dialogIndex++;
-            mostrarDialogo(falas, onEnd);
-          });
-        } else {
-          if (onEnd) onEnd();
-        }
-      }
-
-      function startDialogo() {
-        dialogIndex = 0;
-        mostrarDialogo(dialogo, () => {
-          input.style.display = "block";
-          input.focus();
-        });
-      }
-
-      input.addEventListener("change", () => {
-        input.style.display = "none";
-        const n = parseInt(input.value);
-        box.innerHTML = "";
-        dialogIndex = 0;
-
-        let respostaBaixa = [
-          "Hmm... então sobrou só os cria raiz mesmo...",
-          "Poucos, mas pesadão.",
-          "Isso que é time de verdade.",
-          "Vocês passaram por coisa que ninguém acreditaria.",
-          "E agora tão aqui, juntos.",
-          "Mesmo sem saída...",
-          "Mas e se eu disser que TEM SIM uma saída?",
-          "Lembra da porta da PRIMEIRA SALA?",
-          "Abri ela agora...",
-          "!!!!!!!",
-          "Sem querer... abri OUTRA COISA também.",
-          "Aquela porta vermelha...",
-          "...",
-          "CORRE!",
-        ];
-
-        if (n > 3) {
-          mostrarDialogo(respostaAlta, () => {
-            box.style.fontSize = "48px";
-            box.style.color = "red";
-            box.innerHTML = "CORRE!";
-          });
-        } else {
-          mostrarDialogo(respostaBaixa, () => {
-            box.style.fontSize = "48px";
-            box.style.color = "red";
-            box.innerHTML = "CORRE!";
-          });
-        }
-      });
-
-      window.onload = startDialogo;
-    </script>
+    <!-- Script -->
+    <script src="script.js"></script>
   </body>
 </html>
