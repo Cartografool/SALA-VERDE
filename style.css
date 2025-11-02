@@ -1,0 +1,85 @@
+html,
+body {
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  background-color: black;
+  image-rendering: pixelated;
+  cursor: none;
+  user-select: none;
+}
+
+/* Cursor personalizado */
+#cursor {
+  position: absolute;
+  transform: scale(1.25);
+  pointer-events: none;
+  transition: transform 0.05s linear;
+}
+
+/* Caixa de diálogo */
+#dialogueBox {
+  z-index: 1;
+  border: 8px solid #bbff00;
+  padding: 10px;
+  height: 100px;
+  color: #bbff00;
+  font-family: consolas, monospace;
+  font-size: 24px;
+  text-align: center;
+  display: block;
+  margin: 6px auto 0;
+  width: 318px;
+}
+
+/* Overlay CRT */
+#overlay {
+  position: absolute;
+  z-index: 3;
+  pointer-events: none;
+  height: 110%;
+  width: 100%;
+  background-image: url(stuff/CRTno.gif);
+  background-repeat: repeat;
+  filter: brightness(0);
+  opacity: 0.5;
+}
+
+/* Imagem de perfil */
+#profilePic {
+  z-index: 1;
+  border: 8px solid #bbff00;
+  display: block;
+  width: 318px;
+  margin: 40px auto 0;
+}
+
+/* Campo de input */
+input {
+  background: black;
+  color: #bbff00;
+  border: 4px solid #bbff00;
+  font-size: 24px;
+  text-align: center;
+  width: 120px;
+  display: block;
+  margin: 20px auto;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+input.show {
+  opacity: 1;
+}
+
+/* Responsividade */
+@media only screen and (max-width: 768px) {
+  #cursor {
+    visibility: hidden;
+  }
+
+  #profilePic {
+    margin-top: 10px;
+  }
+}
